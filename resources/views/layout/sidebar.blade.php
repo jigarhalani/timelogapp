@@ -34,15 +34,15 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">HEADER</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li class="treeview">
+            <li class="{{ (Request::is('home') ? 'active' : '') }}"><a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li class="treeview {{ (Request::is('lead/*') ? 'active' : '') }}">
                 <a href="#"><i class="fa fa-edit"></i><span>Lead generation</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ url('lead/add') }}">Add Lead</a></li>
+                    <li {{ (Request::is('lead/add') ? 'class=active' : '') }}><a href="{{ url('lead/add') }}">Add Lead</a></li>
                     <li><a href="{{ url('lead/view') }}">View Lead</a></li>
                 </ul>
             </li>
