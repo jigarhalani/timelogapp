@@ -12,8 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('layout.app');
+    return \Illuminate\Support\Facades\Redirect::to('/login');
 });
 
 
-Route::get('/test', 'TestController@index');
+
+Auth::routes();
+
+Route::middleware(['auth'])->group(function (){
+
+    Route::get('/test', 'TestController@index');
+    Route::get('/home', 'TestController@index')->name('home');
+
+});
+
