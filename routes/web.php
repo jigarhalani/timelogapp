@@ -26,8 +26,10 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/profile', 'TestController@index');
 
 
+
     Route::group(['prefix' => 'lead'], function () {
             Route::get('/add', 'LeadController@index');
+            Route::post('/add', 'LeadController@save');
     });
 });
 

@@ -66,6 +66,16 @@ desired effect
    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+            <section class="content-header">
+                <h1>
+                    Lead Database
+                    @yield('page_heading')
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">@yield('page_heading')</li>
+                </ol>
+            </section>
             @yield('content')
         <!-- /.content -->
     </div>
@@ -90,6 +100,8 @@ desired effect
 <script src="{{ asset("bower_components/bootstrap/dist/js/bootstrap.min.js")}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset("bower_components/admin-lte/dist/js/adminlte.min.js")}}"></script>
+
+<script src="{{ asset("js/custom.js")}}"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
