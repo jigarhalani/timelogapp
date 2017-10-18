@@ -46,10 +46,60 @@ class LeadController extends Controller
 
         }Catch(\Exception $e){
             Session::flash('message',[
-                'msg'=>"Something went wrong!!",
+                'msg'=>$e->getMessage(),
                 'type'=>'alert-danger',
             ]);
         }
         return Redirect::to('lead/add');
     }
+
+
+    public function view(){
+        $leads=$this->lead->getAll();
+        return view('admin.lead.view',['leads'=>$leads]);
+    }
+
+
+    public function delete($id){
+        try{
+            $this->lead->delete($id);
+            Session::flash('message',[
+                'msg' => 'Deleted successfully.Thank you!!',
+                'type' =>"alert-success"
+            ]);
+        }catch (\Exception $e){
+
+            Session::flash('message',[
+                'msg'=>$e->getMessage(),
+                'type'=>'alert-danger',
+            ]);
+
+        }
+
+        return Redirect::to('lead/view');
+
+    }
+
+
+    public function edit($id){
+
+        try{
+            $lead=$this->lead->getById($id);
+            return view('admin.lead.edit',['lead'=>$lead]);
+        }catch (\Exception $e){
+
+            Session::flash('message',[
+                'msg'=>$e->getMessage(),
+                'type'=>'alert-danger',
+            ]);
+            return Redirect::to('lead/view');
+        }
+
+    }
+
+    public function update(){
+
+    }
+
+
 }

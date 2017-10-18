@@ -25,6 +25,8 @@ class LeadGenerationTable extends Migration
                  $table->string('email1')->nullable();
                  $table->string('email2')->nullable();
                  $table->string('country');
+                 $table->tinyInteger('meeting_status')->default(1)->comment("1 for initial phase, 1 for second phase 0 blocked");
+                 $table->tinyInteger('is_active')->default(1)->comment("0 for inactive, 1 for active");
                  $table->timestamps();
 
          });

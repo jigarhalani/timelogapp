@@ -30,6 +30,10 @@ Route::middleware(['auth'])->group(function (){
     Route::group(['prefix' => 'lead'], function () {
             Route::get('/add', 'LeadController@index');
             Route::post('/add', 'LeadController@save');
+            Route::get('/view', 'LeadController@view');
+            Route::get('/edit/{id}', 'LeadController@edit');
+            Route::get('/delete/{id}', 'LeadController@delete');
+
     });
 });
 

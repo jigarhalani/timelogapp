@@ -13,4 +13,8 @@ interface LeadInterface {
         public function getAll();
 
         public function save($data);
+
+        public function delete($id);
+
+        public function getById($id);
 }

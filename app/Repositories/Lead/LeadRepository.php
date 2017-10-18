@@ -21,11 +21,21 @@ class LeadRepository implements LeadInterface{
 
     public function getAll()
     {
-        return $this->lead->getAll();
+        return $this->lead->where(['is_active'=>'1'])->get();
     }
 
     public function save($data)
     {
         return $this->lead->create($data);
     }
+
+    public function delete($id)
+    {
+        return $this->lead->where('id', '=', $id)->update(['is_active'=>0]);
+    }
+
+    public function getById($id){
+        return $this->lead->where(['is_active'=>'1'])->find($id);
+    }
+
 }

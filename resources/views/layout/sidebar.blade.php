@@ -43,7 +43,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li {{ (Request::is('lead/add') ? 'class=active' : '') }}><a href="{{ url('lead/add') }}">Add Lead</a></li>
-                    <li><a href="{{ url('lead/view') }}">View Lead</a></li>
+                    <li {{ (Request::is('lead/view') ? 'class=active' : '') }}><a href="{{ url('lead/view') }}">View Lead</a></li>
                 </ul>
             </li>
         </ul>
