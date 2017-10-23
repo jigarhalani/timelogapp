@@ -34,6 +34,14 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/edit/{id}', 'LeadController@edit');
             Route::get('/delete/{id}', 'LeadController@delete');
 
+            Route::post('/update/{id}', 'LeadController@update');
+            Route::post('/meeting', 'LeadController@update');
+
+            Route::get('/blocked', 'LeadController@blocked');
+            Route::get('/activate/{id}', 'LeadController@activate');
+
+
+
     });
 });
 

@@ -19,9 +19,9 @@ class LeadRepository implements LeadInterface{
         $this->lead=$lead;
     }
 
-    public function getAll()
+    public function getAll($where=['is_active'=>'1'])
     {
-        return $this->lead->where(['is_active'=>'1'])->get();
+        return $this->lead->where($where)->get();
     }
 
     public function save($data)
@@ -29,13 +29,17 @@ class LeadRepository implements LeadInterface{
         return $this->lead->create($data);
     }
 
-    public function delete($id)
+    public function updateStatus($id,$status=['is_active'=>0])
     {
-        return $this->lead->where('id', '=', $id)->update(['is_active'=>0]);
+        return $this->lead->where('id', '=', $id)->update($status);
     }
 
     public function getById($id){
-        return $this->lead->where(['is_active'=>'1'])->find($id);
+        return $this->lead->find($id);
+    }
+
+    public function update($id,$data){
+        return $this->lead->where('id', '=', $id)->update($data);
     }
 
 }

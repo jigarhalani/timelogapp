@@ -10,11 +10,13 @@ namespace App\Repositories\Lead;
 
 interface LeadInterface {
 
-        public function getAll();
+        public function getAll($where);
 
         public function save($data);
 
-        public function delete($id);
+        public function updateStatus($id,$status);
 
         public function getById($id);
+
+        public function update($id,$data);
 }

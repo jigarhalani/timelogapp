@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class LeadController extends Controller
 {
@@ -59,10 +60,14 @@ class LeadController extends Controller
         return view('admin.lead.view',['leads'=>$leads]);
     }
 
+    public function blocked(){
+        $leads=$this->lead->getAll(['is_active'=>'0']);
+        return view('admin.lead.view',['leads'=>$leads]);
+    }
 
     public function delete($id){
         try{
-            $this->lead->delete($id);
+            $this->lead->updateStatus($id);
             Session::flash('message',[
                 'msg' => 'Deleted successfully.Thank you!!',
                 'type' =>"alert-success"
@@ -76,7 +81,7 @@ class LeadController extends Controller
 
         }
 
-        return Redirect::to('lead/view');
+        return Redirect::back();
 
     }
 
@@ -85,20 +90,70 @@ class LeadController extends Controller
 
         try{
             $lead=$this->lead->getById($id);
-            return view('admin.lead.edit',['lead'=>$lead]);
+            if($lead==null)
+                throw  new \Exception("Lead Not Found");
+                return view('admin.lead.edit',['lead'=>$lead]);
         }catch (\Exception $e){
 
             Session::flash('message',[
                 'msg'=>$e->getMessage(),
                 'type'=>'alert-danger',
             ]);
-            return Redirect::to('lead/view');
+            return Redirect::back();
         }
 
     }
 
-    public function update(){
+    public function update($id,Request $r){
 
+
+        try{
+
+            $rules = array(
+                'company_url' => 'required|url|unique:leads,company_url,'.$id,
+                'country' => 'required',
+            );
+            $validator = Validator::make($r->all(),$rules);
+            if ($validator->fails()){
+                return Redirect::back()->withErrors($validator);
+            }
+            else{
+                $this->lead->update($id,$r->except(['_token']));
+                Session::flash('message',[
+                    'msg' => 'Updated successfully.Thank you!!',
+                    'type' =>"alert-success"
+                ]);
+            }
+
+        }Catch(\Exception $e){
+            Session::flash('message',[
+                'msg'=>$e->getMessage(),
+                'type'=>'alert-danger',
+            ]);
+        }
+        return Redirect::back();
+
+    }
+
+
+    public function activate($id){
+
+        try{
+            $this->lead->updateStatus($id,['is_active'=>1]);
+            Session::flash('message',[
+                'msg' => 'Activated successfully.Thank you!!',
+                'type' =>"alert-success"
+            ]);
+        }catch (\Exception $e){
+
+            Session::flash('message',[
+                'msg'=>$e->getMessage(),
+                'type'=>'alert-danger',
+            ]);
+
+        }
+
+        return Redirect::back();
     }
 
 
