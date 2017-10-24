@@ -33,7 +33,7 @@
                         <tbody>
 
                             @foreach($leads as $lead)
-                                    <tr>
+                                    <tr >
                                         <td>{{ $lead->name1 }} <br> {{ $lead->name2 }}</td>
                                         <td>{{ $lead->company_name }}</td>
                                         <td>{{ $lead->company_url }}</td>
@@ -46,7 +46,7 @@
                                                 <a href="{{ url('lead/activate/'.$lead->id) }}" title="Activate" onclick="return confirm('Want to activate?');"> <i class="fa fa-star"></i></a>
                                             @else
                                                 <a href="{{ url('lead/delete/'.$lead->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>
-                                                <a href="{{ url('lead/setmeeting/'.$lead->id) }}" title="Set meeting" data-toggle="modal" data-target="#modal-default"> <i class="fa fa-clock-o "></i></a>
+                                                <a href="#" title="Set meeting" id="setfollowup" data-toggle="modal" data-target="#modal-default" data-leadid="{{$lead->id}}"> <i class="fa fa-clock-o "></i></a>
                                             @endif
                                         </td>
                                     </tr>
@@ -74,28 +74,41 @@
 
         <div class="modal fade" id="modal-default">
             <div class="modal-dialog">
-                <form action="{{ url('lead/meeting') }}" method="POST">
+                <form action="#" method="POST" id="followup_form">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Set Meeting</h4>
+                                <h4 class="modal-title">Set follow up</h4>
                         </div>
                         <div class="modal-body">
-                            <span>Meeting With : <span id="m_name"></span></span>
-                            <input type="hidden" name="lead_id" value="" id="m_lead_id">
+
+
                             <div class="form-group">
-                                <div class='input-group date' id='datetimepicker1'>
-                                    <input type='text' class="form-control" />
+
+                                <span>Follow up with : <span id="m_name"></span></span>
+
+                            </div>
+
+                            <div class="form-group">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="lead_id" value="" id="m_lead_id">
+                                <span>Date:</span>
+                                <div class='input-group date' id='datepicker'>
+                                    <input type='text' class="form-control"  name="followup_time"/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <span>Notes</span>
+                                <textarea class="form-control" rows="3" placeholder="Notes" name="notes"></textarea>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="close_model">Close</button>
+                            <button type="button" class="btn btn-primary" id="model_save_changes">Save changes</button>
                         </div>
                     </div>
                 </form>
@@ -110,5 +123,33 @@
 
 @section('script')
     $('#leadtable').DataTable();
-    $('#datetimepicker1').datetimepicker();
+    $('#datepicker').datepicker({
+        autoclose: true,
+        format: 'dd-mm-yyyy'
+    })
+
+    $('#setfollowup').on('click',function(){
+            $("#m_name").html($(this).parents("tr").children("td:first").text());
+            $("#m_lead_id").val($(this).data("leadid"));
+    });
+
+
+    $('#model_save_changes').click(function(){
+            $.ajax({
+                url: base_url+"/lead/setfollowup",
+                data:$('#followup_form').serialize(),
+                type:"POST",
+                success: function(html){
+                   $('#modal-default').modal('hide');
+
+                }
+            });
+    });
+
+    $('#close_model').on('click',function(){
+            $('#followup_form').
+            $('#modal-default').modal('hide');
+    });
+
+
 @endsection

@@ -14,5 +14,7 @@
 
 {{-- Used for Common noticiation by ajax request --}}
 <div class="wrapper">
-    <div class="notification-container"></div>
+    <div class="notification-container">
+
+    </div>
 </div>

@@ -19,4 +19,6 @@ interface LeadInterface {
         public function getById($id);
 
         public function update($id,$data);
+
+        public function setfollowup($data);
 }

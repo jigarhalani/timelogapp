@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Lead\LeadInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -156,5 +157,14 @@ class LeadController extends Controller
         return Redirect::back();
     }
 
+    public function setfollowup(Request $request){
+        $requestData = $request->all();
+        $requestData['followup_time'] = Carbon::parse($requestData['followup_time'])->toDateTimeString();
+        Session::flash('message',[
+            'msg' => 'Follow up set successfully .Thank you!!',
+            'type' =>"alert-success"
+        ]);
+        return $this->lead->setfollowup($requestData);
+    }
 
 }

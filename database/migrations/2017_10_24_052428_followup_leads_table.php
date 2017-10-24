@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MeetingLeadTable extends Migration
+class FollowupLeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class MeetingLeadTable extends Migration
      */
     public function up()
     {
-        Schema::create('meetings', function (Blueprint $table) {
 
+        Schema::create('followups',function(Blueprint $table){
             $table->increments('id');
             $table->integer('lead_id');
-            $table->dateTime('meeting_time');
+            $table->dateTime('followup_time');
             $table->text('notes');
             $table->tinyInteger('is_active')->default(1)->comment("0 for inactive, 1 for active");
             $table->timestamps();
-
         });
     }
 
@@ -32,6 +31,6 @@ class MeetingLeadTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meetings');
+        Schema::dropIfExists('followups');
     }
 }

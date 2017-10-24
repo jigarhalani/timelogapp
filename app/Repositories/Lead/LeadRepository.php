@@ -8,15 +8,18 @@
 
 namespace App\Repositories\Lead;
 
+use App\Followup;
 use App\Lead;
 
 class LeadRepository implements LeadInterface{
 
     public $lead;
+    public $followup;
 
-    function __construct(Lead $lead)
+    function __construct(Lead $lead , Followup $followup)
     {
         $this->lead=$lead;
+        $this->followup=$followup;
     }
 
     public function getAll($where=['is_active'=>'1'])
@@ -40,6 +43,10 @@ class LeadRepository implements LeadInterface{
 
     public function update($id,$data){
         return $this->lead->where('id', '=', $id)->update($data);
+    }
+
+    public function setfollowup($data){
+        return $this->followup->create($data);
     }
 
 }

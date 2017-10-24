@@ -39,6 +39,6 @@ class LeadGenerationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lead');
+        Schema::dropIfExists('leads');
     }
 }
