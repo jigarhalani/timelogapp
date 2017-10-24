@@ -14,7 +14,7 @@
 
                 <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Data Table With Full Features</h3>
+                    <h3 class="box-title">All Activated Leads</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -28,6 +28,7 @@
                             <th>Emails</th>
                             <th>Contact No</th>
                             <th>Options</th>
+                            <th>Follow up</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,7 +47,12 @@
                                                 <a href="{{ url('lead/activate/'.$lead->id) }}" title="Activate" onclick="return confirm('Want to activate?');"> <i class="fa fa-star"></i></a>
                                             @else
                                                 <a href="{{ url('lead/delete/'.$lead->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>
-                                                <a href="#" title="Set meeting" id="setfollowup" data-toggle="modal" data-target="#modal-default" data-leadid="{{$lead->id}}"> <i class="fa fa-clock-o "></i></a>
+                                                <a href="#" title="Set meeting" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-leadid="{{$lead->id}}"> <i class="fa fa-clock-o "></i></a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(count($lead->followup)>0)
+                                                    <a href="{{ url('lead/followup/'.$lead->id) }}" title="See follow up Detail"> <i class="fa fa-line-chart"></i></a>
                                             @endif
                                         </td>
                                     </tr>
@@ -62,6 +68,7 @@
                             <th>Emails</th>
                             <th>Contact No</th>
                             <th>Options</th>
+                            <th>Follow up</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -128,7 +135,7 @@
         format: 'dd-mm-yyyy'
     })
 
-    $('#setfollowup').on('click',function(){
+    $('.setfollowup').on('click',function(){
             $("#m_name").html($(this).parents("tr").children("td:first").text());
             $("#m_lead_id").val($(this).data("leadid"));
     });
@@ -140,14 +147,15 @@
                 data:$('#followup_form').serialize(),
                 type:"POST",
                 success: function(html){
+                   document.getElementById("followup_form").reset();
                    $('#modal-default').modal('hide');
-
+                        location.reload();
                 }
             });
     });
 
     $('#close_model').on('click',function(){
-            $('#followup_form').
+            document.getElementById("followup_form").reset();
             $('#modal-default').modal('hide');
     });
 

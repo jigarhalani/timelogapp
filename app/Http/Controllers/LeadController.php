@@ -167,4 +167,39 @@ class LeadController extends Controller
         return $this->lead->setfollowup($requestData);
     }
 
+
+    public function followup($id){
+        try{
+            $lead=$this->lead->getById($id);
+            if($lead==null)
+                throw  new \Exception("Lead Not Found");
+            return view('admin.lead.followup',['lead'=>$lead]);
+        }catch (\Exception $e){
+            Session::flash('message',[
+                'msg'=>$e->getMessage(),
+                'type'=>'alert-danger',
+            ]);
+            return Redirect::back();
+        }
+    }
+
+    public function deletefollowup($id){
+        try{
+            $this->lead->updateFollowupStatus($id);
+            Session::flash('message',[
+                'msg' => 'Deleted successfully.Thank you!!',
+                'type' =>"alert-success"
+            ]);
+        }catch (\Exception $e){
+
+            Session::flash('message',[
+                'msg'=>$e->getMessage(),
+                'type'=>'alert-danger',
+            ]);
+
+        }
+
+        return Redirect::back();
+    }
+
 }

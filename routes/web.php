@@ -40,7 +40,8 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/blocked', 'LeadController@blocked');
             Route::get('/activate/{id}', 'LeadController@activate');
 
-
+            Route::get('/followup/{id}', 'LeadController@followup');
+            Route::get('/delete-followup/{id}', 'LeadController@deletefollowup');
 
     });
 });

@@ -24,7 +24,9 @@ class LeadRepository implements LeadInterface{
 
     public function getAll($where=['is_active'=>'1'])
     {
-        return $this->lead->where($where)->get();
+        return $this->lead->with(['followup'=>function($query){
+            $query->where('is_active','1');
+        }])->where($where)->get();
     }
 
     public function save($data)
@@ -37,8 +39,15 @@ class LeadRepository implements LeadInterface{
         return $this->lead->where('id', '=', $id)->update($status);
     }
 
+    public function updateFollowupStatus($id,$status=['is_active'=>0])
+    {
+        return $this->followup->where('id', '=', $id)->update($status);
+    }
+
     public function getById($id){
-        return $this->lead->find($id);
+        return $this->lead->with(['followup'=>function($query){
+            $query->where('is_active','1');
+        }])->find($id);
     }
 
     public function update($id,$data){
