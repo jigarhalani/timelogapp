@@ -44,8 +44,9 @@
                                                     {{ $task->notes }}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ url('lead/followup/'.$task->lead->id) }}" title="See Followups"><i class="fa fa-line-chart"></i></a> &nbsp
-                                                    <a href="#" title="Reschedule Followup" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-followupid="{{ $task->id }}"> <i class="fa fa-clock-o "></i></a>
+                                                    <a href="{{ url('lead/followup/'.$task->lead->id) }}" title="See Followups"><i class="fa fa-line-chart"></i></a> &nbsp;
+                                                    <a href="#" title="Reschedule Followup" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-followupid="{{ $task->id }}"> <i class="fa fa-clock-o "></i></a>&nbsp;
+                                                    <a href="{{ url('lead/delete-followup/'.$task->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                 @endforeach
@@ -91,8 +92,9 @@
                                             {{ $task->notes }}
                                         </td>
                                         <td>
-                                            <a href="{{ url('lead/followup/'.$task->lead->id) }}" title="See Followups"><i class="fa fa-line-chart"></i></a> &nbsp
-                                            <a href="#" title="Reschedule Followup" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-followupid="{{ $task->id }}"> <i class="fa fa-clock-o "></i></a>
+                                            <a href="{{ url('lead/followup/'.$task->lead->id) }}" title="See Followups"><i class="fa fa-line-chart"></i></a> &nbsp;
+                                            <a href="#" title="Reschedule Followup" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-followupid="{{ $task->id }}"> <i class="fa fa-clock-o "></i></a> &nbsp;
+                                            <a href="{{ url('lead/delete-followup/'.$task->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
