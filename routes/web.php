@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function (){
 
             Route::post('/update/{id}', 'LeadController@update');
             Route::post('/setfollowup', 'LeadController@setfollowup');
+            Route::post('/reschedulefollowup/{id}', 'LeadController@reschedulefollowup');
 
             Route::get('/blocked', 'LeadController@blocked');
             Route::get('/activate/{id}', 'LeadController@activate');

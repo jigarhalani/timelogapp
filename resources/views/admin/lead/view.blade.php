@@ -129,11 +129,10 @@
     $('#leadtable').DataTable();
     $('#datepicker').datetimepicker();
 
-    $('.setfollowup').on('click',function(){
+    $(document).on('click','.setfollowup',function(){
             $("#m_name").html($(this).parents("tr").children("td:first").text());
             $("#m_lead_id").val($(this).data("leadid"));
     });
-
 
     $('#model_save_changes').click(function(){
             $.ajax({

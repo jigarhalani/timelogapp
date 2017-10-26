@@ -167,6 +167,17 @@ class LeadController extends Controller
         return $this->lead->setfollowup($requestData);
     }
 
+    public function reschedulefollowup($id,Request $request){
+        $requestData = $request->except(['_token']);
+        $requestData['followup_time'] = Carbon::parse($requestData['followup_time'])->toDateTimeString();
+        Session::flash('message',[
+            'msg' => 'Follow up reschedule successfully .Thank you!!',
+            'type' =>"alert-success"
+        ]);
+        return $this->lead->updatefollowup($id,$requestData);
+    }
+
+
 
     public function followup($id){
         try{

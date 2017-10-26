@@ -22,6 +22,8 @@ interface LeadInterface {
 
         public function setfollowup($data);
 
+        public function updatefollowup($id,$data);
+
         public function updateFollowupStatus($id,$status);
 
         public function getFollowup($start,$end,$where);

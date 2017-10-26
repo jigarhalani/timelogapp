@@ -59,6 +59,10 @@ class LeadRepository implements LeadInterface{
         return $this->followup->create($data);
     }
 
+    public function updatefollowup($id,$data){
+        return $this->followup->where('id', '=', $id)->update($data);
+    }
+
     public function getFollowup($start,$end,$where=['is_active'=>1]){
         return $this->followup->with('lead')->whereBetween('followup_time',array($start,$end))->where($where)->get();
     }
