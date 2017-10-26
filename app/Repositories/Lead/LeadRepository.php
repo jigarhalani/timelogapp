@@ -10,6 +10,7 @@ namespace App\Repositories\Lead;
 
 use App\Followup;
 use App\Lead;
+use Carbon\Carbon;
 
 class LeadRepository implements LeadInterface{
 
@@ -56,6 +57,10 @@ class LeadRepository implements LeadInterface{
 
     public function setfollowup($data){
         return $this->followup->create($data);
+    }
+
+    public function getFollowup($start,$end,$where=['is_active'=>1]){
+        return $this->followup->with('lead')->whereBetween('followup_time',array($start,$end))->where($where)->get();
     }
 
 }

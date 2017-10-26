@@ -17,12 +17,11 @@
                     <h3 class="box-title">All Activated Leads</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body table-responsive no-padding">
                     <table id="leadtable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>CEO/Manager Name</th>
-                            <th>Comapany Name</th>
                             <th>Comapany URL</th>
                             <th>Country</th>
                             <th>Emails</th>
@@ -36,7 +35,6 @@
                             @foreach($leads as $lead)
                                     <tr >
                                         <td>{{ $lead->name1 }} <br> {{ $lead->name2 }}</td>
-                                        <td>{{ $lead->company_name }}</td>
                                         <td>{{ $lead->company_url }}</td>
                                         <td>{{ $lead->country }}</td>
                                         <td>{{ $lead->email1 }} <br> {{ $lead->email2 }}</td>
@@ -47,7 +45,7 @@
                                                 <a href="{{ url('lead/activate/'.$lead->id) }}" title="Activate" onclick="return confirm('Want to activate?');"> <i class="fa fa-star"></i></a>
                                             @else
                                                 <a href="{{ url('lead/delete/'.$lead->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>
-                                                <a href="#" title="Set meeting" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-leadid="{{$lead->id}}"> <i class="fa fa-clock-o "></i></a>
+                                                <a href="#" title="Set Follow up" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-leadid="{{$lead->id}}"> <i class="fa fa-clock-o "></i></a>
                                             @endif
                                         </td>
                                         <td>
@@ -62,7 +60,6 @@
                         <tfoot>
                         <tr>
                             <th>CEO/Manager Name</th>
-                            <th>Comapany Name</th>
                             <th>Comapany URL</th>
                             <th>Country</th>
                             <th>Emails</th>
@@ -130,10 +127,7 @@
 
 @section('script')
     $('#leadtable').DataTable();
-    $('#datepicker').datepicker({
-        autoclose: true,
-        format: 'dd-mm-yyyy'
-    })
+    $('#datepicker').datetimepicker();
 
     $('.setfollowup').on('click',function(){
             $("#m_name").html($(this).parents("tr").children("td:first").text());
