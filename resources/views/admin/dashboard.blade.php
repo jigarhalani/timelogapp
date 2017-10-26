@@ -38,9 +38,9 @@
                                 <tbody>
                                 @foreach($today as $task)
                                             <tr>
-                                                <td><a href="{{ url('lead/edit/'.$task->lead->id) }}" title="Click to know more">{{ $task->lead->name1 }}</a></td>
-                                                <td>{{ \Carbon\Carbon::parse($task->followup_time) }}</td>
-                                                <td>
+                                                <td class="name"><a href="{{ url('lead/edit/'.$task->lead->id) }}" title="Click to know more">{{ $task->lead->name1 }}</a></td>
+                                                <td class="time">{{ \Carbon\Carbon::parse($task->followup_time) }}</td>
+                                                <td class="notes">
                                                     {{ $task->notes }}
                                                 </td>
                                                 <td>
@@ -85,9 +85,9 @@
                                 <tbody>
                                 @foreach($nextweek as $task)
                                     <tr>
-                                        <td><a href="{{ url('lead/edit/'.$task->lead->id) }}" title="Click to know more">{{ $task->lead->name1 }}</a></td>
-                                        <td>{{ \Carbon\Carbon::parse($task->followup_time) }}</td>
-                                        <td>
+                                        <td class="name"><a href="{{ url('lead/edit/'.$task->lead->id) }}" title="Click to know more">{{ $task->lead->name1 }}</a></td>
+                                        <td class="time">{{ \Carbon\Carbon::parse($task->followup_time) }}</td>
+                                        <td class="notes">
                                             {{ $task->notes }}
                                         </td>
                                         <td>
@@ -130,7 +130,7 @@
                             <input type="hidden" name="id" value="" id="m_lead_id">
                             <span>Date:</span>
                             <div class='input-group date' id='datepicker'>
-                                <input type='text' class="form-control"  name="followup_time"/>
+                                <input type='text' class="form-control"  name="followup_time" id="followup_time"/>
                                 <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="form-group">
                             <span>Notes</span>
-                            <textarea class="form-control" rows="3" placeholder="Notes" name="notes"></textarea>
+                            <textarea class="form-control" rows="3" placeholder="Notes" name="notes" id="notes"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -160,8 +160,10 @@
     $('#datepicker').datetimepicker();
 
     $(document).on('click','.setfollowup',function(){
-            $("#m_name").html($(this).parents("tr").children("td:first").text());
+            $("#m_name").html($(this).parents("tr").children(".name").text());
             $("#m_lead_id").val($(this).data("followupid"));
+            $("#notes").val($(this).parents("tr").children(".notes").text().trim());
+            $('#datepicker').data("DateTimePicker").date(moment($(this).parents("tr").children(".time").text()));
     });
 
     $('#model_save_changes').click(function(){

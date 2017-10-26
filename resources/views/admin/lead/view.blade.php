@@ -34,7 +34,7 @@
 
                             @foreach($leads as $lead)
                                     <tr >
-                                        <td>{{ $lead->name1 }} <br> {{ $lead->name2 }}</td>
+                                        <td class="name">{{ $lead->name1 }} <br> {{ $lead->name2 }}</td>
                                         <td>{{ $lead->company_url }}</td>
                                         <td>{{ $lead->country }}</td>
                                         <td>{{ $lead->email1 }} <br> {{ $lead->email2 }}</td>
@@ -130,7 +130,7 @@
     $('#datepicker').datetimepicker();
 
     $(document).on('click','.setfollowup',function(){
-            $("#m_name").html($(this).parents("tr").children("td:first").text());
+            $("#m_name").html($(this).parents("tr").children(".name").text());
             $("#m_lead_id").val($(this).data("leadid"));
     });
 
