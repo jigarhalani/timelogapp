@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/view', 'LeadController@view');
             Route::get('/edit/{id}', 'LeadController@edit');
             Route::get('/delete/{id}', 'LeadController@delete');
+            Route::get('/status/{id}/{status}', 'LeadController@changeLeadStatus');
 
             Route::post('/update/{id}', 'LeadController@update');
             Route::post('/setfollowup', 'LeadController@setfollowup');
@@ -40,6 +41,8 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('/blocked', 'LeadController@blocked');
             Route::get('/activate/{id}', 'LeadController@activate');
+
+            Route::get('/converted', 'LeadController@converted');
 
             Route::get('/followup/{id}', 'LeadController@followup');
             Route::get('/delete-followup/{id}', 'LeadController@deletefollowup');

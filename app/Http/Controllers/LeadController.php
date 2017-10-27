@@ -57,7 +57,7 @@ class LeadController extends Controller
 
 
     public function view(){
-        $leads=$this->lead->getAll();
+        $leads=$this->lead->getAll(['meeting_status'=>'1','is_active'=>'1']);
         return view('admin.lead.view',['leads'=>$leads]);
     }
 
@@ -155,6 +155,32 @@ class LeadController extends Controller
         }
 
         return Redirect::back();
+    }
+
+    public function changeLeadStatus($id,$status){
+
+        try{
+            $this->lead->updateStatus($id,['meeting_status'=>$status]);
+            Session::flash('message',[
+                'msg' => 'Moved Successfully.Thank you!!',
+                'type' =>"alert-success"
+            ]);
+        }catch (\Exception $e){
+
+            Session::flash('message',[
+                'msg'=>$e->getMessage(),
+                'type'=>'alert-danger',
+            ]);
+
+        }
+        return Redirect::back();
+    }
+
+    public function converted(){
+
+            $leads=$this->lead->getAll(['meeting_status'=>'2','is_active'=>'1']);
+            return view('admin.lead.view',['leads'=>$leads]);
+
     }
 
     public function setfollowup(Request $request){

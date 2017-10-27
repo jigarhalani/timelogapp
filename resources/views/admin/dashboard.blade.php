@@ -92,9 +92,16 @@
                                             {{ $task->notes }}
                                         </td>
                                         <td>
-                                            <a href="{{ url('lead/followup/'.$task->lead->id) }}" title="See Followups"><i class="fa fa-line-chart"></i></a> &nbsp;
-                                            <a href="#" title="Reschedule Followup" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-followupid="{{ $task->id }}"> <i class="fa fa-clock-o "></i></a> &nbsp;
-                                            <a href="{{ url('lead/delete-followup/'.$task->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>
+                                            <a href="{{ url('lead/followup/'.$task->lead->id) }}" title="See Followups"><i class="fa fa-line-chart"></i></a> &nbsp;&nbsp;
+                                            <a href="#" title="Reschedule Followup" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-followupid="{{ $task->id }}"> <i class="fa fa-clock-o "></i></a> &nbsp;&nbsp;
+                                            <a href="{{ url('lead/delete-followup/'.$task->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>&nbsp;
+                                            @if($task->lead->meeting_status=='1')
+                                                <a href="{{ url('lead/status/'.$task->lead->id.'/'.'2') }}" title="Move to Converted" onclick="return confirm('Want to Move?');"> <i class="fa fa-inr"></i></a>&nbsp;
+                                            @else
+                                                <a href="{{ url('lead/status/'.$task->lead->id.'/'.'1') }}" title="Move to Normal" onclick="return confirm('Want to Move?');"> <i class="fa fa-scissors"></i></a>&nbsp;
+                                            @endif
+
+
                                         </td>
                                     </tr>
                                 @endforeach

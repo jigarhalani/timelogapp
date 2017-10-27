@@ -45,6 +45,7 @@
                     <li {{ (Request::is('lead/add') ? 'class=active' : '') }}><a href="{{ url('lead/add') }}">Add Lead</a></li>
                     <li {{ (Request::is('lead/view') ? 'class=active' : '') }}><a href="{{ url('lead/view') }}">View Lead</a></li>
                     <li {{ (Request::is('lead/blocked') ? 'class=active' : '') }}><a href="{{ url('lead/blocked') }}">Blocked Lead</a></li>
+                    <li {{ (Request::is('lead/converted') ? 'class=active' : '') }}><a href="{{ url('lead/converted') }}">Converted Lead</a></li>
                 </ul>
             </li>
         </ul>

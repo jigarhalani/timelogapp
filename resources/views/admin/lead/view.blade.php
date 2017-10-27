@@ -17,8 +17,9 @@
                     <h3 class="box-title">All Activated Leads</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-                    <table id="leadtable" class="table table-bordered table-striped">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="leadtable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>CEO/Manager Name</th>
@@ -40,15 +41,21 @@
                                         <td>{{ $lead->email1 }} <br> {{ $lead->email2 }}</td>
                                         <td>{{ $lead->contact_no1 }} <br> {{ $lead->contact_no2 }}</td>
                                         <td>
-                                             <a href="{{ url('lead/edit/'.$lead->id) }}" title="Edit"> <i class="fa fa-edit"></i></a>
+                                             <a href="{{ url('lead/edit/'.$lead->id) }}" title="Edit"> <i class="fa fa-edit"></i></a>&nbsp;
                                             @if(Request::is('lead/blocked'))
-                                                <a href="{{ url('lead/activate/'.$lead->id) }}" title="Activate" onclick="return confirm('Want to activate?');"> <i class="fa fa-star"></i></a>
+                                                <a href="{{ url('lead/activate/'.$lead->id) }}" title="Activate" onclick="return confirm('Want to activate?');"> <i class="fa fa-star"></i></a>&nbsp;
                                             @else
-                                                <a href="{{ url('lead/delete/'.$lead->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>
-                                                <a href="#" title="Set Follow up" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-leadid="{{$lead->id}}"> <i class="fa fa-clock-o "></i></a>
+                                                <a href="{{ url('lead/delete/'.$lead->id) }}" title="Delete" onclick="return confirm('Want to delete?');"> <i class="fa fa-trash"></i></a>&nbsp;
+                                                <a href="#" title="Set Follow up" class="setfollowup" data-toggle="modal" data-target="#modal-default" data-leadid="{{$lead->id}}"> <i class="fa fa-clock-o "></i></a>&nbsp;
                                             @endif
+
                                         </td>
                                         <td>
+                                            @if(Request::is('lead/converted'))
+                                                <a href="{{ url('lead/status/'.$lead->id.'/'.'1') }}" title="Move to Normal" onclick="return confirm('Want to Move?');"> <i class="fa fa-scissors"></i></a>&nbsp;&nbsp;
+                                            @else
+                                                <a href="{{ url('lead/status/'.$lead->id.'/'.'2') }}" title="Move to Converted" onclick="return confirm('Want to Move?');"> <i class="fa fa-inr"></i></a>&nbsp;&nbsp;
+                                            @endif
                                             @if(count($lead->followup)>0)
                                                     <a href="{{ url('lead/followup/'.$lead->id) }}" title="See follow up Detail"> <i class="fa fa-line-chart"></i></a>
                                             @endif
@@ -69,6 +76,7 @@
                         </tr>
                         </tfoot>
                     </table>
+                    </div>
                 </div>
                 <!-- /.box-body -->
             </div>
