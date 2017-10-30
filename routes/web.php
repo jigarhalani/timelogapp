@@ -24,7 +24,11 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/test', 'TestController@index');
     Route::get('/home', 'TestController@index')->name('home');
     Route::get('/profile', 'TestController@index');
-
+    /*Route::get('/mailable', function () {
+        $lead=\Illuminate\Support\Facades\App::make(\App\Repositories\Lead\LeadInterface::class);
+        $data['today']=$lead->getFollowup(\Carbon\Carbon::now()->setTime(0,0), \Carbon\Carbon::now()->setTime(23,59));;
+        return new App\Mail\Followupnotification($data);
+    });*/
 
 
     Route::group(['prefix' => 'lead'], function () {
