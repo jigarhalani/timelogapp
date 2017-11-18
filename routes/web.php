@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function (){
-
+    Route::get('/test2', 'TestController@index');
     Route::get('/test', 'TestController@index');
     Route::get('/home', 'TestController@index')->name('home');
     Route::get('/profile', 'TestController@index');
