@@ -16,7 +16,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset("bower_components/Ionicons/css/ionicons.min.css")}}">
     <!-- Theme style -->
+
+    <link rel="stylesheet" href="{{ asset("bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css") }}">
+
     <link rel="stylesheet" href="{{ asset("bower_components/admin-lte/dist/css/AdminLTE.min.css")}}">
+
+
+    <link rel="stylesheet" href="{{ asset("css/bootstrap-datetimepicker.css") }}">
+
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
@@ -66,6 +73,15 @@ desired effect
    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+            <section class="content-header">
+                <h1>
+                    @yield('page_heading')
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">@yield('page_heading')</li>
+                </ol>
+            </section>
             @yield('content')
         <!-- /.content -->
     </div>
@@ -85,14 +101,36 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src="{{ asset("bower_components/jquery/dist/jquery.min.js") }}"></script>
+<script src="{{ asset("js/jquery-2.1.1.min.js") }}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset("bower_components/bootstrap/dist/js/bootstrap.min.js")}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset("bower_components/admin-lte/dist/js/adminlte.min.js")}}"></script>
 
+<script src="{{ asset("js/custom.js")}}"></script>
+
+
+<script src="{{ asset("bower_components/datatables.net/js/jquery.dataTables.min.js") }} "></script>
+<script src="{{ asset("bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js") }}"></script>
+<!-- SlimScroll -->
+<script src="{{ asset("bower_components/jquery-slimscroll/jquery.slimscroll.min.js") }}"></script>
+<!-- FastClick -->
+<script src="{{ asset("js/moment.js") }}"></script>
+
+<script src="{{ asset("js/bootstrap-datetimepicker.js") }}"></script>
+
+
+<script src="{{ asset("bower_components/fastclick/lib/fastclick.js") }}"></script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+<script>
+    var base_url="{{ url('/') }}";
+    $(function () {
+        @yield('script')
+    });
+</script>
+
 </body>
 </html>

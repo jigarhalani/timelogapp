@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Lead\LeadInterface;
+use App\Repositories\Lead\LeadRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->bind(LeadInterface::class, LeadRepository::class);
     }
 }

@@ -2,38 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Lead\LeadInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
+    private $lead;
+
+    public function __construct(LeadInterface $lead){
+        $this->lead=$lead;
+    }
     public function index() {
-        $data['tasks'] = [
-            [
-                'name' => 'Design New Dashboard',
-                'progress' => '87',
-                'color' => 'danger'
-            ],
-            [
-                'name' => 'Create Home Page',
-                'progress' => '76',
-                'color' => 'warning'
-            ],
-            [
-                'name' => 'Some Other Task',
-                'progress' => '32',
-                'color' => 'success'
-            ],
-            [
-                'name' => 'Start Building Website',
-                'progress' => '56',
-                'color' => 'info'
-            ],
-            [
-                'name' => 'Develop an Awesome Algorithm',
-                'progress' => '10',
-                'color' => 'success'
-            ]
-        ];
-        return view('admin.demo')->with($data);
+        $data['today']=$this->lead->getFollowup(Carbon::now()->setTime(0,0), Carbon::now()->setTime(23,59));
+        $data['nextweek']=$this->lead->getFollowup(Carbon::now()->setTime(0,0)->addDay(1), Carbon::now()->setTime(23,59)->addDay(1)->addWeek());
+        return view('admin.dashboard')->with($data);
     }
 }
