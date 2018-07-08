@@ -52,5 +52,11 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/delete-followup/{id}', 'LeadController@deletefollowup');
 
     });
+
+    Route::group(['prefix' => 'backup'], function () {
+        Route::get('download','LeadController@download');
+        Route::get('excel','LeadController@excel');
+
+    });
 });
 

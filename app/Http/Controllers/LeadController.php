@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LeadExport;
+use App\Lead;
+use App\Mail\Backup;
 use App\Repositories\Lead\LeadInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use Mockery\Exception;
 
 class LeadController extends Controller
@@ -237,6 +244,15 @@ class LeadController extends Controller
         }
 
         return Redirect::back();
+    }
+    public function download(){
+
+    }
+    public function excel(){
+        ini_set('max_execution_time', 3000);
+        Excel::store(new LeadExport(),'invoices1.xlsx');
+        Mail::to('jigarhalani555@gmail.com')->send(new Backup(storage_path('app/invoices1.xlsx')));
+        return Excel::download(new LeadExport(),'invoices1.xlsx');
     }
 
 }

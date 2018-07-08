@@ -47,6 +47,18 @@
                     <li {{ (Request::is('lead/blocked') ? 'class=active' : '') }}><a href="{{ url('lead/blocked') }}">Blocked Lead</a></li>
                     <li {{ (Request::is('lead/converted') ? 'class=active' : '') }}><a href="{{ url('lead/converted') }}">Converted Lead</a></li>
                 </ul>
+
+            </li>
+            <li class="treeview {{ (Request::is('backup') ? 'active' : '') }}">
+                <a href="#"><i class="fa fa-edit"></i><span>Backup</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    {{--<li {{ (Request::is('backup/download') ? 'class=active' : '') }}><a href="{{ url('backup/download') }}">Download Backup</a></li>--}}
+                    <li {{ (Request::is('backup/excel') ? 'class=active' : '') }}><a href="{{ url('backup/excel') }}">Generate Excel</a></li>
+                </ul>
             </li>
         </ul>
         <!-- /.sidebar-menu -->

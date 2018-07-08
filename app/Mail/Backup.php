@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Followupnotification extends Mailable
+class Backup extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,10 +16,12 @@ class Followupnotification extends Mailable
      *
      * @return void
      */
-    public function __construct($data)
+    protected $file;
+
+    public function __construct($file)
     {
         //
-        $this->data=$data;
+        $this->file=$file;
     }
 
     /**
@@ -29,6 +31,6 @@ class Followupnotification extends Mailable
      */
     public function build()
     {
-        return $this->from('jigar.abhicenation@gmail.com')->markdown('emails.notification')->with($this->data);
+        return $this->from('jigarhalani555@gmail.com')->markdown('emails.backup')->attach($this->file);
     }
 }
