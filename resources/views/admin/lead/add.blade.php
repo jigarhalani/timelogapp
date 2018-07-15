@@ -36,7 +36,7 @@
 
                         <div class="form-group">
                             <label>Company URL</label>
-                            <input type="text" class="form-control" placeholder="Company Url" name="company_url" value="{{ old('company_url') }}">
+                            <input type="text" class="form-control" placeholder="Company Url" name="company_url" value="{{ old('company_url') }}" id="company_url">
                         </div>
 
                         <div class="form-group">
@@ -90,4 +90,19 @@
 
     </section>
 
+@endsection
+
+@section('script')
+    $(document).on('blur','#company_url',function(){
+            $.ajax({
+                url:'checkurl',
+                type:'GET',
+                data:{'url':$(this).val()},
+                success:function(e){
+                    if(e>=1){
+                        alert(e+" Record already exist");
+                    }
+                }
+            });
+    });
 @endsection

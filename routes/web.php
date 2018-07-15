@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function (){
 
 
     Route::group(['prefix' => 'lead'], function () {
+            Route::get('/checkurl','LeadController@checkurl');
             Route::get('/add', 'LeadController@index');
             Route::post('/add', 'LeadController@save');
             Route::get('/view', 'LeadController@view');

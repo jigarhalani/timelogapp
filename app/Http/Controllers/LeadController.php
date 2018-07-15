@@ -38,6 +38,17 @@ class LeadController extends Controller
             return view('admin.lead.add');
     }
 
+    public function checkurl(){
+        $url=$_GET['url'];
+        $input = trim($url, '/');
+        if (!preg_match('#^http(s)?://#', $input)) {
+            $input = 'http://' . $input;
+        }
+        $urlParts = parse_url($input);
+        $domain = preg_replace('/^www\./', '', $urlParts['host']);
+        $data=Lead::Where('company_url', 'like', '%' . $domain . '%')->first();
+        echo count($data);
+    }
 
     public function save(Request $r){
         try{
