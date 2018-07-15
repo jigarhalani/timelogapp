@@ -9,6 +9,7 @@ use App\Repositories\Lead\LeadInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
@@ -30,6 +31,10 @@ class LeadController extends Controller
 
     public function index()
     {
+            if(empty($_COOKIE['backup'])){
+                setcookie('backup', 'backup', time() + (86400 * 5), "/");
+                $this->backup();
+            }
             return view('admin.lead.add');
     }
 
@@ -210,6 +215,11 @@ class LeadController extends Controller
         return $this->lead->updatefollowup($id,$requestData);
     }
 
+    public function backup(){
+        ini_set('max_execution_time', 3000);
+        Excel::store(new LeadExport(),'invoices1.xlsx');
+        Mail::to('jigarhalani555@gmail.com')->send(new Backup(storage_path('app/invoices1.xlsx')));
+    }
 
 
     public function followup($id){
