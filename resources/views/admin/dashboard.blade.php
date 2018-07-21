@@ -1,12 +1,12 @@
-
-
-
 @extends('layout.app')
 
+@section('addcss')
+<link href="{{ asset('bower_components/fullcalendar/dist/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bower_components/fullcalendar/dist/fullcalendar.print.css') }}" rel="stylesheet" type="text/css" media='print' />
+@endsection
 
 @section('page_heading','Dashboard')
 @section('content')
-
     <!-- Content Header (Page header) -->
     <!-- Main content -->
     <section class="content container-fluid">
@@ -14,6 +14,13 @@
         @include('admin.includes.notification')
 
         <div class='row'>
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-body no-padding">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
             <div class='col-md-6'>
                 <!-- Box -->
                 <div class="box box-success">
@@ -111,7 +118,6 @@
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
-
         </div><!-- /.row -->
 
     </section>
@@ -161,12 +167,61 @@
         <!-- /.modal-dialog -->
     </div>
 
+
+@endsection
+
+@section('addscript')
+    <script src="{{ asset('bower_components/fullcalendar/dist/fullcalendar.min.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('script')
+    var date = new Date();
+    var d = date.getDate(),
+    m = date.getMonth(),
+    y = date.getFullYear();
+
     $('#todayfollowup').DataTable();
     $('#nextweekfollowup').DataTable();
     $('#datepicker').datetimepicker();
+
+    $('#calendar').fullCalendar({
+    header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+    },
+    buttonText: {
+            today: 'today',
+            month: 'month',
+            week: 'week',
+            day: 'day'
+    },
+    events: {!!  json_encode($calander,JSON_PRETTY_PRINT) !!},
+    editable: false,
+    droppable: false, // this allows things to be dropped onto the calendar !!!
+    drop: function (date, allDay) { // this function is called when something is dropped
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+                copiedEventObject.backgroundColor = $(this).css("background-color");
+                copiedEventObject.borderColor = $(this).css("border-color");
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                // if so, remove the element from the "Draggable Events" list
+                $(this).remove();
+                }
+    }
+    });
 
     $(document).on('click','.setfollowup',function(){
             $("#m_name").html($(this).parents("tr").children(".name").text());
@@ -195,3 +250,4 @@
 
 
 @endsection
+
